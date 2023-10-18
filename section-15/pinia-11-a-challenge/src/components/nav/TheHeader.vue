@@ -3,9 +3,11 @@ import { useCartStore } from '../../store/cart.store';
 import { useUsersStore } from '../../store/users.store.js';
 import { storeToRefs } from 'pinia';
 
+// ** CART STORE **
 const cartStore = useCartStore();
-const usersStore = useUsersStore();
 
+// ** USER STORE **
+const usersStore = useUsersStore();
 const { login, logout } = usersStore;
 const { isLoggedIn } = storeToRefs(usersStore);
 </script>

@@ -1,7 +1,7 @@
 <script setup>
 import { useCartStore } from '../../store/cart.store';
 
-// store
+// ** CART STORE **
 const cartStore = useCartStore();
 const { removeProductFromCart } = cartStore;
 const { prodId, title, image, price, qty } = defineProps([

@@ -1,6 +1,5 @@
 <script setup>
 import { useCartStore } from '../../store/cart.store';
-import { storeToRefs } from 'pinia';
 
 // props
 const { id, image, title, price, description } = defineProps([
@@ -11,7 +10,7 @@ const { id, image, title, price, description } = defineProps([
   'description',
 ]);
 
-// store
+// ** CART STORE **
 const cartStore = useCartStore();
 const { addProductToCart } = cartStore;
 

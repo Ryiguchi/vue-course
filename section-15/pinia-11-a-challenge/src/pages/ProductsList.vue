@@ -4,6 +4,7 @@ import { useProductsStore } from '../store/products.store';
 
 import ProductItem from '../components/products/ProductItem.vue';
 
+// ** PRODUCTS STORE **
 const productsStore = useProductsStore();
 const { products } = storeToRefs(productsStore);
 </script>

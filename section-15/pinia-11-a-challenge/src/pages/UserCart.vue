@@ -3,7 +3,7 @@ import { storeToRefs } from 'pinia';
 import CartItem from '../components/cart/CartItem.vue';
 import { useCartStore } from '../store/cart.store';
 
-// store
+// ** CART STORE **
 const cartStore = useCartStore();
 const { items, cartTotal } = storeToRefs(cartStore);
 </script>
