@@ -4,13 +4,7 @@ import { useCartStore } from '../../store/cart.store';
 // ** CART STORE **
 const cartStore = useCartStore();
 const { removeProductFromCart } = cartStore;
-const { prodId, title, image, price, qty } = defineProps([
-  'prodId',
-  'title',
-  'image',
-  'price',
-  'qty',
-]);
+const props = defineProps(['prodId', 'title', 'image', 'price', 'qty']);
 
 // getters
 const itemTotal = (price * qty).toFixed(2);
@@ -24,18 +18,18 @@ function remove() {
 <template>
   <li>
     <div>
-      <img :src="image" :alt="title" />
+      <img :src="props.image" :alt="props.title" />
     </div>
     <div>
-      <h3>{{ title }}</h3>
+      <h3>{{ props.title }}</h3>
       <div class="item__data">
         <div>
           Price per Item:
-          <strong>${{ price }}</strong>
+          <strong>${{ props.price }}</strong>
         </div>
         <div>
           Quantity:
-          <strong>{{ qty }}</strong>
+          <strong>{{ props.qty }}</strong>
         </div>
       </div>
       <div class="item__total">Total: ${{ itemTotal }}</div>

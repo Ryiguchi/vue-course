@@ -1,30 +1,51 @@
 <template>
   <section class="container">
-    <h2>{{ fullName }}</h2>
-    <h3>{{ userAge }}</h3>
+    <UserData :first-name="firstName" :last-name="lastName" />
     <button @click="changeAge">Increment Age</button>
     <div>
       <input type="text" placeholder="First name" v-model="firstName" />
-      <input type="text" placeholder="Last name" v-model="lastName" />
+      <input type="text" placeholder="Last name" ref="lastNameInput" />
+      <button @click="setLastName">Set Last Name</button>
     </div>
   </section>
 </template>
 
 <script>
-import { computed, ref, reactive, isRef, isReactive, toRefs, watch } from 'vue';
+import {
+  computed,
+  ref,
+  reactive,
+  isRef,
+  isReactive,
+  toRefs,
+  watch,
+  provide,
+  onBeforeMount,
+  onMounted,
+  onBeforeUpdate,
+  onUpdated,
+  onBeforeUnmount,
+  onUnmounted,
+} from 'vue';
+import UserData from './components/UserData.vue';
 
 export default {
+  components: {
+    UserData,
+  },
   // "this" does not refer to the object since the setup method is executed before initialization
   setup() {
     // const userName = ref('Maximilian');
     // const userAge = ref(45);
 
     const userAge = ref(45);
+    provide('userAge', userAge);
     // const name = computed(() => user.value.name);
     // const age = computed(() => user.value.age);
 
     const firstName = ref('');
     const lastName = ref('');
+    const lastNameInput = ref(null);
     const fullName = computed(() => firstName.value + ' ' + lastName.value);
 
     watch([userAge, fullName], function (newValues, oldValues) {
@@ -32,6 +53,10 @@ export default {
       console.log('new age: ', newValues[0]);
       console.log('old name: ', oldValues[1]);
       console.log('new name: ', newValues[1]);
+    });
+
+    onBeforeMount(() => {
+      console.log('Before mount');
     });
 
     // console.log(isRef(user.name)); // false
@@ -50,6 +75,11 @@ export default {
       userAge.value++;
     }
 
+    // REFS on an element
+    function setLastName() {
+      lastName.value = lastNameInput.value.value;
+    }
+
     // function setFirstName(e) {
     //   firstName.value = e.target.value;
     // }
@@ -63,6 +93,8 @@ export default {
       fullName,
       firstName,
       lastName,
+      lastNameInput,
+      setLastName,
       changeAge,
       // setFirstName,
       // setLastName,
