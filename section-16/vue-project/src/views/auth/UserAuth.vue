@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
 
@@ -29,9 +29,9 @@ const switchModeButtonCaption = computed(() => {
 });
 
 // watchers
-watch(error, () => {
-  errorMessage.value = error.value
-    ? error.value.message || 'There was a problem fetching!'
+watch(error, value => {
+  errorMessage.value = value
+    ? value.message || 'There was a problem fetching!'
     : null;
 });
 

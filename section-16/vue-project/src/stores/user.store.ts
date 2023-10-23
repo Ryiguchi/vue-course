@@ -85,19 +85,15 @@ export const useUserStore = defineStore('user', {
       const idToken = localStorage.getItem('idToken');
       const localId = localStorage.getItem('localId');
       const tokenExpiration = localStorage.getItem('tokenExpiration');
-
       const expiresIn = tokenExpiration
         ? +tokenExpiration - new Date().getTime()
         : -1;
-
       if (expiresIn < 0) {
         return;
       }
-
       timer = setTimeout(() => {
         this.autoLogout();
       }, expiresIn);
-
       if (idToken && localId && tokenExpiration) {
         this.setUser({ idToken, localId, expiresIn: 'null' });
       }

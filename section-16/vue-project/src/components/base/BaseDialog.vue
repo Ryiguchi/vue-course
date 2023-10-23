@@ -1,14 +1,19 @@
 <script setup lang="ts">
-const { show, title, fixed } = withDefaults(
-  defineProps<{
-    show: boolean;
-    title?: string;
-    fixed?: boolean;
-  }>(),
-  { fixed: false }
-);
-
-console.log(show, title, fixed);
+const { show, title, fixed } = defineProps({
+  show: {
+    type: Boolean,
+    required: true,
+  },
+  title: {
+    type: String,
+    required: false,
+  },
+  fixed: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+});
 
 const emit = defineEmits<{
   close: [];
