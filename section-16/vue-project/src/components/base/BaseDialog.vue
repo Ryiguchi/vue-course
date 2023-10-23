@@ -1,3 +1,27 @@
+<script setup lang="ts">
+const { show, title, fixed } = withDefaults(
+  defineProps<{
+    show: boolean;
+    title?: string;
+    fixed?: boolean;
+  }>(),
+  { fixed: false }
+);
+
+console.log(show, title, fixed);
+
+const emit = defineEmits<{
+  close: [];
+}>();
+
+function tryClose() {
+  if (fixed) {
+    return;
+  }
+  emit('close');
+}
+</script>
+
 <template>
   <teleport to="body">
     <div v-if="show" @click="tryClose" class="backdrop"></div>
@@ -21,7 +45,7 @@
   </teleport>
 </template>
 
-<script lang="ts">
+<!-- <script lang="ts">
 export default {
   props: {
     show: {
@@ -48,7 +72,7 @@ export default {
     },
   },
 };
-</script>
+</script> -->
 
 <style scoped>
 .backdrop {

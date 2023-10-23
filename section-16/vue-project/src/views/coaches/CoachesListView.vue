@@ -1,8 +1,9 @@
-<!-- <script setup lang="ts">
-import { computed, ref } from 'vue';
+<script setup lang="ts">
+import { computed, onMounted, ref, watch } from 'vue';
+import { storeToRefs } from 'pinia';
+
 import { useCoachesStore } from '../../stores/coaches.store';
 import { useUserStore } from '@/stores/user.store';
-import { storeToRefs } from 'pinia';
 
 import CoachItem from '../../components/coaches/CoachItem.vue';
 import CoachFilter from '@/components/coaches/CoachFilter.vue';
@@ -11,8 +12,9 @@ import CoachFilter from '@/components/coaches/CoachFilter.vue';
 const coachesStore = useCoachesStore();
 const userStore = useUserStore();
 
-const { coaches, hasCoaches } = storeToRefs(coachesStore);
-const { isCoach } = storeToRefs(userStore);
+const { coaches, hasCoaches, isLoading, error } = storeToRefs(coachesStore);
+const { isCoach, isAuthenticated } = storeToRefs(userStore);
+const { loadCoaches } = coachesStore;
 
 // refs
 const activeFilters = ref({
@@ -20,6 +22,7 @@ const activeFilters = ref({
   backend: true,
   career: true,
 });
+const errorMessage = ref<string | null>(null);
 
 // computed
 const filteredCoaches = computed(() => {
@@ -39,11 +42,31 @@ const filteredCoaches = computed(() => {
   });
 });
 
+// watch
+watch(error, value => {
+  errorMessage.value = error.value
+    ? error.value.message || 'There was a problem fetching!'
+    : null;
+});
+
+// lifecycles
+onMounted(() => {
+  loadCoaches();
+});
+
 // functions
 function setFilters(updatedFilters: IFilterOptions) {
   activeFilters.value = updatedFilters;
 }
-</script> -->
+
+function handleError() {
+  errorMessage.value = null;
+}
+
+function reloadCoaches(forceReload: boolean = false) {
+  loadCoaches(forceReload);
+}
+</script>
 
 <template>
   <div>
@@ -63,8 +86,13 @@ function setFilters(updatedFilters: IFilterOptions) {
           <base-button mode="outline" @click="reloadCoaches(true)"
             >Refresh</base-button
           >
-
-          <base-button v-if="!isCoach && !isLoading" link to="/register"
+          <base-button link to="/auth?redirect=register" v-if="!isAuthenticated"
+            >Login to register as a coach</base-button
+          >
+          <base-button
+            v-if="isAuthenticated && !isCoach && !isLoading"
+            link
+            to="/register"
             >Register as a Coach</base-button
           >
         </div>
@@ -88,7 +116,7 @@ function setFilters(updatedFilters: IFilterOptions) {
   </div>
 </template>
 
-<script lang="ts">
+<!-- <script lang="ts">
 import { defineComponent } from 'vue';
 import { mapState, mapActions } from 'pinia';
 
@@ -122,7 +150,7 @@ export default defineComponent({
       'isLoading',
       'error',
     ]),
-    ...mapState(useUserStore, ['isCoach']),
+    ...mapState(useUserStore, ['isCoach', 'isAuthenticated']),
 
     filteredCoaches() {
       const coaches = this.coaches;
@@ -170,7 +198,7 @@ export default defineComponent({
     },
   },
 });
-</script>
+</script> -->
 
 <style scoped>
 ul {

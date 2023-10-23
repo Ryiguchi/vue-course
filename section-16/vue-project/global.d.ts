@@ -45,4 +45,15 @@ declare global {
   interface IRequest extends IRequestNoId {
     id: string;
   }
+
+  interface ISignupFormData {
+    email: string;
+    password: string;
+  }
+
+  interface IAuthenticatedUserData {
+    idToken: string;
+    localId: string;
+    expiresIn: string;
+  }
 }

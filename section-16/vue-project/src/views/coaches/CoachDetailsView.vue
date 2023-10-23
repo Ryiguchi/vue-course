@@ -1,10 +1,8 @@
-<!-- <script setup lang="ts">
+<script setup lang="ts">
 import { computed, onBeforeMount, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { useCoachesStore } from '../../stores/coaches/coaches.store';
+import { useCoachesStore } from '@/stores/coaches.store';
 import { storeToRefs } from 'pinia';
-
-import type { ICoach } from '../../stores/coaches/coaches.store';
 
 const route = useRoute();
 const coachesStore = useCoachesStore();
@@ -13,7 +11,7 @@ const { id } = defineProps<{ id: string }>();
 
 // refs
 const { coaches } = storeToRefs(coachesStore);
-const selectedCoach = ref<ICoach>();
+const selectedCoach = ref<ICoachDataNoId>();
 
 // computed
 const fullName = computed(
@@ -28,7 +26,7 @@ const areas = computed(() => selectedCoach.value?.areas);
 onBeforeMount(() => {
   selectedCoach.value = coaches.value.find(coach => coach.id === id);
 });
-</script> -->
+</script>
 
 <template>
   <div>
@@ -61,7 +59,7 @@ onBeforeMount(() => {
   </div>
 </template>
 
-<script lang="ts">
+<!-- <script lang="ts">
 import { defineComponent } from 'vue';
 import { useCoachesStore } from '../../stores/coaches.store';
 import { mapState } from 'pinia';
@@ -100,6 +98,6 @@ export default defineComponent({
     this.selectedCoach = this.coaches.find(coach => coach.id === this.id);
   },
 });
-</script>
+</script> -->
 
 <style scoped></style>

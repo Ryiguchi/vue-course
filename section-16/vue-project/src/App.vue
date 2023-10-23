@@ -1,5 +1,27 @@
 <script setup lang="ts">
+import { onMounted, watch } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useRouter } from 'vue-router';
+
+import { useUserStore } from './stores/user.store';
+
 import TheHeader from './components/layout/TheHeader.vue';
+
+const userStore = useUserStore();
+const router = useRouter();
+
+const { didAutoLogout } = storeToRefs(userStore);
+const { checkLogin } = userStore;
+
+watch(didAutoLogout, (newValue, oldValue) => {
+  if (newValue && newValue !== oldValue) {
+    router.replace('/coaches');
+  }
+});
+
+onMounted(() => {
+  checkLogin();
+});
 </script>
 
 <template>
@@ -13,12 +35,35 @@ import TheHeader from './components/layout/TheHeader.vue';
 
 <!-- <script lang="ts">
 import TheHeader from './components/layout/TheHeader.vue';
+import { mapActions, mapState } from 'pinia';
+import { useUserStore } from './stores/user.store';
 
 export default {
   components: {
     TheHeader,
   },
+
+  computed: {
+    ...mapState(useUserStore, ['didAutoLogout']),
+  },
+
+  created() {
+    this.checkLogin();
+  },
+
+  watch: {
+    didAutoLogout(value, oldValue) {
+      if (value && value !== oldValue) {
+        this.$router.replace('/coaches');
+      }
+    },
+  },
+
+  methods: {
+    ...mapActions(useUserStore, ['checkLogin']),
+  },
 };
+
 </script> -->
 
 <style>

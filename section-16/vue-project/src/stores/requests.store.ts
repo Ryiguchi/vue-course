@@ -25,8 +25,10 @@ export const useRequestsStore = defineStore('requests', {
       this.isLoading = true;
       this.error = null;
 
+      const { userId, token } = useUserStore();
+
       const response = await fetch(
-        `https://vue-coaches-930d2-default-rtdb.europe-west1.firebasedatabase.app/requests.json`
+        `https://vue-coaches-930d2-default-rtdb.europe-west1.firebasedatabase.app/requests.json?auth=${token}`
       );
 
       if (!response.ok) {
@@ -41,10 +43,9 @@ export const useRequestsStore = defineStore('requests', {
       const requestData: IRequestDBData = await response.json();
 
       let requests: IRequest[] = [];
-      const coach = useUserStore().userId;
 
       for (const key in requestData) {
-        if (requestData[key].coachId === coach) {
+        if (requestData[key].coachId === userId) {
           const matchingRequest = {
             ...requestData[key],
             id: key,
@@ -56,6 +57,7 @@ export const useRequestsStore = defineStore('requests', {
       this.allRequests = requests;
       this.isLoading = false;
     },
+
     async addRequest(requestData: IRequestNoId) {
       this.isLoading = true;
       this.error = null;

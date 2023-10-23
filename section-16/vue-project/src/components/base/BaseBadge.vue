@@ -1,4 +1,4 @@
-<!-- <script setup lang="ts">
+<script setup lang="ts">
 import { computed } from 'vue';
 
 interface IProps {
@@ -11,7 +11,7 @@ const { type, title } = withDefaults(defineProps<IProps>(), {
 });
 
 const text = computed(() => title.toUpperCase());
-</script> -->
+</script>
 
 <template>
   <span class="badge" :class="type">
@@ -19,7 +19,7 @@ const text = computed(() => title.toUpperCase());
   </span>
 </template>
 
-<script lang="ts">
+<!-- <script lang="ts">
 import { defineComponent } from 'vue';
 
 export default defineComponent({
@@ -40,7 +40,7 @@ export default defineComponent({
     },
   },
 });
-</script>
+</script> -->
 
 <style scoped>
 .badge {

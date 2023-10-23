@@ -95,15 +95,16 @@ export const useCoachesStore = defineStore('coaches', {
     },
 
     async addCoach(data: ICoachFormData) {
-      // get user id from user store
-      const userId = useUserStore().userId;
+      // get user id from user store and return if there is no user
+      const { userId, token } = useUserStore();
+      if (!userId) return;
 
       // format form data
       const coachData = this.formatCoachFormData(data, userId);
 
       // send to DB
       const response = await fetch(
-        `https://vue-coaches-930d2-default-rtdb.europe-west1.firebasedatabase.app/coaches/${userId}.json`,
+        `https://vue-coaches-930d2-default-rtdb.europe-west1.firebasedatabase.app/coaches/${userId}.json?auth=${token}`,
         {
           method: 'PUT',
           body: JSON.stringify(coachData),

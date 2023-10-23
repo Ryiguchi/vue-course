@@ -1,4 +1,4 @@
-<!-- <script setup lang="ts">
+<script setup lang="ts">
 interface IProps {
   link?: boolean;
   to?: string;
@@ -10,7 +10,7 @@ const { link, to, mode } = withDefaults(defineProps<IProps>(), {
   to: '/',
   mode: null,
 });
-</script> -->
+</script>
 
 <template>
   <button v-if="!link" :class="mode">
@@ -21,7 +21,7 @@ const { link, to, mode } = withDefaults(defineProps<IProps>(), {
   </RouterLink>
 </template>
 
-<script lang="ts">
+<!-- <script lang="ts">
 import { defineComponent } from 'vue';
 
 export default defineComponent({
@@ -42,7 +42,7 @@ export default defineComponent({
     },
   },
 });
-</script>
+</script> -->
 
 <style scoped>
 button,

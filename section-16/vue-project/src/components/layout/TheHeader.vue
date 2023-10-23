@@ -1,4 +1,20 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { storeToRefs } from 'pinia';
+import { useRouter } from 'vue-router';
+
+import { useUserStore } from '@/stores/user.store';
+
+const userStore = useUserStore();
+const router = useRouter();
+
+const { isAuthenticated } = storeToRefs(userStore);
+const { logout } = userStore;
+
+function handleLogout() {
+  logout();
+  router.replace('/coaches');
+}
+</script>
 
 <template>
   <header>
@@ -6,11 +22,39 @@
       <h1><RouterLink to="/">Find a Coach</RouterLink></h1>
       <ul>
         <li><RouterLink to="/coaches">All Coaches</RouterLink></li>
-        <li><RouterLink to="/requests">Requests</RouterLink></li>
+        <li v-if="isAuthenticated">
+          <RouterLink to="/requests">Requests</RouterLink>
+        </li>
+        <li v-else>
+          <RouterLink to="/auth">Login</RouterLink>
+        </li>
+        <li v-if="isAuthenticated">
+          <base-button @click="handleLogout">Logout</base-button>
+        </li>
       </ul>
     </nav>
   </header>
 </template>
+
+<!-- <script lang="ts">
+import { mapState, mapActions } from 'pinia';
+import { useUserStore } from '@/stores/user.store';
+
+export default {
+  computed: {
+    ...mapState(useUserStore, ['isAuthenticated']),
+  },
+
+  methods: {
+    ...mapActions(useUserStore, ['logout']),
+
+    handleLogout() {
+      this.logout();
+      this.$router.replace('/coaches');
+    },
+  },
+};
+</script> -->
 
 <style scoped>
 header {

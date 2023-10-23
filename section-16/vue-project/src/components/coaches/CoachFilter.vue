@@ -1,4 +1,4 @@
-<!-- <script setup lang="ts">
+<script setup lang="ts">
 import { ref } from 'vue';
 
 const emit = defineEmits<{
@@ -24,7 +24,7 @@ function setFilter(event: Event) {
 
   emit('change-filter', updatedFilters);
 }
-</script> -->
+</script>
 
 <template>
   <base-card>
@@ -44,7 +44,7 @@ function setFilter(event: Event) {
   </base-card>
 </template>
 
-<script lang="ts">
+<!-- <script lang="ts">
 export default {
   emits: ['change-filter'],
 
@@ -73,7 +73,7 @@ export default {
     },
   },
 };
-</script>
+</script> -->
 
 <style scoped>
 h2 {
